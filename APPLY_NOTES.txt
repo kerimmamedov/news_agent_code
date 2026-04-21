@@ -1,0 +1,21 @@
+Replace these files in your project:
+- app/services/summarizer_service.py
+- app/services/translate_service.py
+- app/db/queries.py
+- app/db/repositories.py
+- app/services/newsletter_service.py
+- scripts/fetch_and_store_news.py
+
+Required DB note:
+Ensure public.news.news_lang check constraint allows FA:
+CHECK (news_lang IN ('AZ', 'EN', 'TR', 'RU', 'UA', 'FA'))
+
+Suggested .env:
+MAX_SITES=0
+BATCH_SIZE=5
+FETCH_LIMIT_PER_SITE=
+
+After replacing files:
+1) python -m scripts.fetch_and_store_news
+2) delete today's sent_articles if needed for retest
+3) python -m scripts.run_daily_news

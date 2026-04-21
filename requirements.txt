@@ -1,0 +1,9 @@
+pandas
+requests
+beautifulsoup4
+feedparser
+openai
+psycopg2-binary
+python-dotenv
+jinja2
+pytest

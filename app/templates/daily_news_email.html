@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Daily News</title>
+</head>
+<body style="margin:0;padding:20px;background:#ffffff;font-family:'Segoe UI', Calibri, Arial, sans-serif;font-size:14px;line-height:1.5;color:#2f2f2f;">
+  <div style="max-width:1000px;margin:0 auto;">
+    <div style="text-align:center;margin:0 0 24px 0;padding:10px 0 14px 0;">
+      <div style="font-family:Georgia, 'Times New Roman', serif;font-size:34px;font-weight:700;line-height:1.1;color:#2f2f2f;">
+        Your Daily News
+      </div>
+    </div>
+
+    {% for article in digest.articles %}
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="border:1px solid #cfcfcf;border-collapse:collapse;margin-bottom:12px;background:#ffffff;">
+      <tr>
+        <td style="padding:14px 16px;color:#2f2f2f;">
+          <div style="margin-bottom:10px;">
+            <strong style="color:#3a3a3a;">📰 Title:</strong>
+            <div style="margin-top:4px;">{{ article.title }}</div>
+          </div>
+
+          <div style="margin-bottom:10px;">
+            <strong style="color:#3a3a3a;">📄 Summary:</strong>
+            <div style="margin-top:4px;white-space:pre-line;">{{ article.summary }}</div>
+          </div>
+
+          <div style="margin-bottom:10px;">
+            <strong style="color:#3a3a3a;">💡 Financial Insight:</strong>
+            <div style="margin-top:4px;white-space:pre-line;">{{ article.insight }}</div>
+          </div>
+
+          <div style="margin-bottom:10px;">
+            <div style="margin-bottom:4px;">
+              <strong style="color:#3a3a3a;">🏷 Keywords:</strong>
+            </div>
+            <span style="background:#eeeeee;color:#000000;font-size:11px;line-height:1.3;padding:2px 6px;">
+              {{ article.keywords }}
+            </span>
+          </div>
+
+          <div style="margin-top:8px;">
+            <a href="{{ article.news_url }}" style="color:#444444;text-decoration:underline;" target="_blank">🔗 Read full article</a>
+          </div>
+        </td>
+      </tr>
+    </table>
+    {% endfor %}
+  </div>
+</body>
+</html>

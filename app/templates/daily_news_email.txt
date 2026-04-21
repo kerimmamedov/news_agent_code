@@ -1,0 +1,18 @@
+{% for article in digest.articles %}
+----------------------------------------
+Title:
+{{ article.title }}
+
+Summary:
+{{ article.summary }}
+
+Financial Insight:
+{{ article.insight }}
+
+Keywords:
+{{ article.keywords }}
+
+Read full article:
+{{ article.news_url }}
+
+{% endfor %}
