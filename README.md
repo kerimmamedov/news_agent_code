@@ -33,6 +33,29 @@ python -m scripts.test_db_connection
 python run.py
 ```
 
+## Windows local run
+
+If you are running the project locally on Windows:
+
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.\.venv\Scripts\Activate.ps1
+python -m scripts.test_db_connection
+.\run_news_agent.bat
+```
+
+To create Windows Task Scheduler jobs for `08:00` and `16:00`:
+
+```powershell
+.\schedule_news_agent_tasks.bat
+```
+
+The local batch run writes logs under:
+
+```powershell
+logs\
+```
+
 ## Ubuntu scheduler
 
 If you want the full pipeline to run automatically on Ubuntu at `08:00` and `16:00` Baku time:
