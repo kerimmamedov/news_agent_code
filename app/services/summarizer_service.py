@@ -6,6 +6,34 @@ import re
 from openai import OpenAI
 
 
+COMPOUND_KEYWORD_RE = re.compile(r"[A-Z]+(?=[A-Z][a-z]|\b)|[A-Z]?[a-z]+|\d+")
+
+
+def normalize_keywords(raw_keywords: str) -> str:
+    cleaned = re.sub(r"[,;/|]+", " ", (raw_keywords or "").strip())
+    if not cleaned:
+        return ""
+
+    hashtag_parts = [part.strip() for part in re.findall(r"#([^#]+)", cleaned) if part.strip()]
+    raw_parts = hashtag_parts if hashtag_parts else [part for part in re.split(r"\s+", cleaned) if part.strip()]
+
+    normalized: list[str] = []
+    for part in raw_parts:
+        token = part.strip().lstrip("#").strip(" ,;|")
+        if not token:
+            continue
+
+        if len(token) > 12:
+            compound_parts = COMPOUND_KEYWORD_RE.findall(token)
+            if len(compound_parts) > 1:
+                normalized.extend(compound_parts)
+                continue
+
+        normalized.append(token)
+
+    return " ".join(normalized)
+
+
 class SummarizerService:
     def __init__(self) -> None:
         api_key = os.getenv("OPENAI_API_KEY")
@@ -140,12 +168,7 @@ Now process these articles:
                 predictions = line.split(":", 1)[1].strip()
             elif lowered.startswith("keywords:"):
                 raw_keywords = line.split(":", 1)[1].strip()
-                parts = [
-                    part.strip().lstrip("#").rstrip(",")
-                    for part in re.split(r"\s+", raw_keywords)
-                    if part.strip()
-                ]
-                parsed["keywords"] = "".join(parts)
+                parsed["keywords"] = normalize_keywords(raw_keywords)
             elif lowered.startswith("link:"):
                 parsed["link"] = line.split(":", 1)[1].strip()
 
